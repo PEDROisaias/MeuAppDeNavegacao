@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Dimensions, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -11,12 +11,19 @@ export default function HomeScreen({ navigation }) {
                 <Button
                     title="Go to Details"
                     onPress={() => navigation.navigate('Details')}
-                    />
+                />
             </View>
             <View style={styles.buttonContainer}>
                 <Button
-                title="Go to Profile"
-                onPress={() => navigation.navigate('Profile')}
+                    title="Go to Profile"
+                    onPress={() => navigation.navigate('Profile')}
+                />
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <Button
+                title="Go Back"
+                onPress={() => navigation.goBack()}
                 />
             </View>
         </View>
@@ -28,7 +35,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f0f8ff',
+        backgroundColor: '#2C3E50',
     },
     title: {
         fontSize: 24,
@@ -40,4 +47,7 @@ const styles = StyleSheet.create({
         width: windowWidth * 0.5,
         borderRadius: 5,
     },
+    text: {
+        color: '#FFFFFF'
+    }
 });

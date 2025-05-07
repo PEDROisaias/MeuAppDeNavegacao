@@ -3,21 +3,27 @@ import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-export default function DetailsScreen({ navigation }) {
-    return  (
+export default function ProfileScreen({ navigation }) {
+    return (
         <View style={styles.container}>
-            <Text style={styles.title}>Details Screen</Text>
+            <Text style={styles.title}>Profile Screen</Text>
             <View style={styles.buttonContainer}>
                 <Button
-                    title="Go to Home"
-                    onPress={() => navigation.navigate('Home')}
+                title="Go to Home"
+                onPress={() => navigation.navigate('Home')}
                 />
             </View>
             <View style={styles.buttonContainer}>
                 <Button
-                  title="Go to Profile"
-                  onPress={() => navigation.navigate('Profile')}
+                title="Go Details"
+                onPress={() => navigation.navigate('Details')}
                 />
+                <View style={styles.buttonContainer}>
+                <Button
+                title="Go Back"
+                onPress={() => navigation.goBack()}
+                />
+            </View>
             </View>
         </View>
     );
@@ -28,16 +34,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#faf0e6',
+        backgroundColor: '#e6e6fa',
     },
     title: {
         fontSize: 24,
         marginBottom: 20,
     },
     buttonContainer: {
-        backgroundColor: '#ffebcd',
+        backgroundColor: '#adda0dd',
         margin: 10,
-        width: windowWidth * 0.5, 
-        borderRadius: 4,
+        width: windowWidth * 0.5,
+        borderRadius: 5,
     },
 });
