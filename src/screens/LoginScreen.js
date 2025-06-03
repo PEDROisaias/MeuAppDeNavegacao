@@ -7,7 +7,7 @@ const windowWidth = Dimensions.get('window').width;
 export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            <View style={styles.containerLogin}>
+            <View style={{width: "75%,", height: 100}}>
                 <TextInput style={styles.inpEmail}> Insira seu email</TextInput>
                 <Button
                     title="Entrar"
@@ -24,11 +24,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#FFFEC6',
-    },
-    containerLogin: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#CC5D4C',
     },
     inpEmail: {
         
