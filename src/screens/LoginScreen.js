@@ -1,31 +1,142 @@
-import React from 'react';
-// import Animated, {useSharedValue, withTiming, useAnimatedStyle, Easing, } from 'react-native-reanimated';
-import { View, StyleSheet, TextInput, Button, Dimensions } from 'react-native';
+import React, { useState, useEffect, use }from 'react';
+import {View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function LoginScreen({ navigation }) {
+    const [userData, setUserData] = useState('');
+    const [userDatas, setUserDatas] = useState([]);
+
+    
+    const saveUserDatas = async (DatasArray) => {
+        try {
+            await AsyncStorage.setItem('userDatas', JSON.stringify(DatasArray));
+        } catch (error) {
+            console.log('Erro ao salvar os dados do usuário:', error);
+        }
+    };
+
+    const loadUserDatas = async () => {
+        try {
+            const storedUserDatas = await AsyncStorage.getItem('userDatas');
+            if ( storedUsersDatas !== null) {
+                setUserDatas(JSON.parse(storedUsersDatas));
+            }
+        } catch (error) {
+            console.log('Erro ao carregar os dados do usuario:', error);
+        }
+    };
+
+    const addUserData = () => {
+        if (userData.trim() !=='') {
+            const newUserDatas = [...userDatas, userData];
+            setUserDatas(newUserDatas);
+            saveUserDatas(newUserDatas);
+            setUserDatas('');
+        }
+    };
+
+    const removeUserData = (index) => {
+        const newUserDatas = userDatas.filter((_, i) => i !== index);
+        setUserDatas(newUserDatas);
+        saveUserDatas(newUserDatas);
+    };
+
+    useEffect(() => {
+        loadUserDatas();
+    }, []);
+
     return (
-        <View style={styles.container}>
-            <View style={{width: "100%,", height: "100%"}}>
-                <TextInput style={styles.inpEmail}> Insira seu email</TextInput>
-                <Button
-                    title="Entrar"
-                    onPress={() => navigation.navigate('Home')}
-                ></Button>
-            </View>
-        </View>
+        <view style={styles.container}>
+            <Text style={styles.title}></Text>
+            <TextInput
+            style={styles.inputName}
+            placeholder="Name"
+            value={userData}
+            onChangeText={(text) => setUserData(text)}
+            />
+
+            <TextInput
+            style={styles.inputEmail}
+            placeholder="E-mail"
+            value= {userData}
+            onChangeText={(text) => setUserData(text)}
+            />
+
+            <TextInput
+            style={styles.inputPassword}
+            placeholder="Password"
+            value= {userData}
+            onChangeText={(text) => setUserData(text)}
+            />
+            <Button title="Sign in" onPress={() => navigation.navigate('Home')}  />
+            <FlatList 
+            data={userData}
+            keyExtractor={(item, index) => index.ToString()}
+            renderItem={({item, index}) => (
+                <View style={styles.userDataContainer}>
+                    <Text style={styles.userDataText}>{item}</Text>
+                    <TouchableOpacity onPress={() => removeUserData(index)}>
+                        <Text style={styles.deleteText}>Excluir</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+        />
+        </view>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FFFEC6',
+        padding: 20,
+        backgroundColor: '#f5f5f5',
     },
-    inpEmail: {
-        
-    }
-})
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 20,
+        marginBottom: 20,
+    },
+
+     inputName: {
+        height: 40,
+        borderColor: '#cccccc',
+        borderWidth: 1,
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
+
+    inputEmail: {
+        height: 40,
+        borderColor: '#cccccc',
+        borderWidth: 1,
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
+
+    inputPassword: {
+        height: 40,
+        borderColor: '#cccccc',
+        borderWidth: 1,
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
+
+    userDataContainer: {
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+    },
+    userDataText: {
+        fontSize: 18,
+    },
+    deleteText: {
+        color: 'red',
+        fontWeight: 'bold',
+    },
+});
