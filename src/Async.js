@@ -9,7 +9,7 @@ const App = () => {
     
     const saveUserDates = async (DatesArray) => {
         try {
-            await AsyncStorage.setItem('dates', JSON.stringify(datesArray));
+            await AsyncStorage.setItem('userDates', JSON.stringify(datesArray));
         } catch (error) {
             console.log('Erro ao salvar os dados do usuário:', error);
         }
@@ -17,10 +17,26 @@ const App = () => {
 
     const loadTasks = async () => {
         try {
-            const storedUsers = await AsyncStorage.getItem('users');
+            const storedUsers = await AsyncStorage.getItem('userDates');
             if ( storedUsers !== null) {
-                setUserDates
+                setUserDates(JSON.parse(storedUsersDates));
             }
+        } catch (error) {
+            console.log('Erro ao carregar os dados do usuario:', error);
         }
+    };
+
+    const addUserDate = () {
+        if (userDate.trim() !=='') {
+            const newUserDates = [...userDates, userDate];
+            setUserDates(newUserDates);
+            saveUserDates(newUserDates);
+            setUserDates('');
+        }
+    };
+
+    const removeUserDate = (index) => {
+        const newUserDates = userDates.filter((_, i) => i !== index);
+        setUserDates()
     }
 }
