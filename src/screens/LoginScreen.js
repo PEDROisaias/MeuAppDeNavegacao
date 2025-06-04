@@ -7,7 +7,7 @@ const windowWidth = Dimensions.get('window').width;
 export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            <View style={{width: "75%,", height: 100}}>
+            <View style={{width: "100%,", height: "100%"}}>
                 <TextInput style={styles.inpEmail}> Insira seu email</TextInput>
                 <Button
                     title="Entrar"
