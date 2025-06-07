@@ -20,8 +20,8 @@ export default function LoginScreen({ navigation }) {
     const loadUserDatas = async () => {
         try {
             const storedUserDatas = await AsyncStorage.getItem('userDatas');
-            if ( storedUsersDatas !== null) {
-                setUserDatas(JSON.parse(storedUsersDatas));
+            if ( storedUserDatas !== null) {
+                setUserDatas(JSON.parse(storedUserDatas));
             }
         } catch (error) {
             console.log('Erro ao carregar os dados do usuario:', error);
@@ -48,7 +48,7 @@ export default function LoginScreen({ navigation }) {
     }, []);
 
     return (
-        <view style={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.title}></Text>
             <TextInput
             style={styles.inputName}
@@ -70,7 +70,7 @@ export default function LoginScreen({ navigation }) {
             value= {userData}
             onChangeText={(text) => setUserData(text)}
             />
-            <Button title="Sign in" onPress={() => navigation.navigate('Home')}  />
+            <Button title="Sign in" onPress={() => navigation.navigate('Home') } />
             <FlatList 
             data={userData}
             keyExtractor={(item, index) => index.ToString()}
@@ -83,7 +83,7 @@ export default function LoginScreen({ navigation }) {
                 </View>
             )}
         />
-        </view>
+        </View>
     );
 };
 
