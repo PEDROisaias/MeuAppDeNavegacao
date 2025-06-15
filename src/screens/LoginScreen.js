@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Dimensions} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Dimensions, Pressable, Easing } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
+
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -27,53 +30,72 @@ export default function LoginScreen({ navigation }) {
         return AsyncStorage.getItem('Password');
     }
 
-    const userDatasVerification = {
-        getName: userName,
-        getEmail: userEmail,
-        getPassword: userPassword,
+    // const animatedPressable = Animated.createAnimatedComponent(Pressable);
 
-        if ()
-    }
+    // const valueScale = useRef(new Animated.Value(1)).current;
 
-    // const addUserData = () => {
-    //     if (userData.trim() !=='') {
-    //         const newUserDatas = [...userDatas, userData];
-    //         setUserDatas(newUserDatas);
-    //         saveUserDatas(newUserDatas);
-    //         setUserDatas('');
-    //     }
+    // const handlePressIn = () => {
+    //     Animated.spring(scaleValue, {
+    //         toValue: 0.9,
+    //         useNativeDriver: true,
+    //     }).start();
     // };
 
-    // const removeUserData = (index) => {
-    //     const newUserDatas = userDatas.filter((_, i) => i !== index);
-    //     setUserDatas(newUserDatas);
-    //     saveUserDatas(newUserDatas);
+    // const handlePressOut = () => {
+    //     Animated.spring(scaleValue, {
+    //         toValue: 1,
+    //         useNativeDriver: true,
+    //     }).start();
     // };
 
-    // useEffect(() => {
-    //     loadUserDatas();
-    // }, []);
+    // const userDatasVerification = {
+    //     getName: userName,
+    //     getEmail: userEmail,
+    //     getPassword: userPassword,
+
+    //     if ()
+    // }
+
+    
+    
 
     return (
         <View style={styles.container}>
             <View style={styles.loginContainer}>
-                <Text style={styles.title}></Text>
-                <TextInput
-                    style={styles.inputName}
-                    placeholder="Name"
-                    onChangeText={(text) => saveUserName(text)}
-                />
-                <TextInput
-                    style={styles.inputEmail}
-                    placeholder="E-mail"
-                    onChangeText={(text) => saveUserEmail(text)}
-                />
-                <TextInput
-                    style={styles.inputPassword}
-                    placeholder="Password"
-                    onChangeText={(text) => saveUserPassword(text)}
-                />
-                <Button title="Sign in" onPress={() => navigation.navigate('Home')} />
+                <Text style={styles.title}>LOGIN</Text>
+
+                <View style={styles.inputName}>
+                    <TextInput
+                        placeholder="Apelido do colono "
+                        onChangeText={(text) => saveUserName(text)}
+                    />
+                </View>
+                <View style={styles.inputEmail}>
+                    <TextInput
+                        placeholder="Identificador de colono"
+                        
+                        onChangeText={(text) => saveUserEmail(text)}
+                    />
+                </View>
+                <View style={styles.inputPassword}>
+                    <TextInput
+                        placeholder="Credenciais de acesso"
+                        onChangeText={(text) => saveUserPassword(text)}
+                    />
+                    <EvilIcons 
+                    name="lock" 
+                    size={12} 
+                    color="black"
+                    style={styles.lock}
+                    />
+                </View>
+                <Pressable 
+                        onPress={ () => navigation.navigate('Home')}
+                        style={styles.btnSignIn}
+                    >
+                    <Text style={styles.txtSignIn}>Acessar</Text>
+                </Pressable>
+
             </View>
         </View>
     );
@@ -81,14 +103,23 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
+        display: 'flex',
         flex: 1,
-        padding: 20,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#2196F3',
+        justifyContent: 'center', 
     },
 
     loginContainer: {
         flex: 1,
-        width: windowWidth * 0.5,
+        marginTop: 110,
+        marginBottom: 200,
+        alignSelf: 'center',
+        borderRadius: 15,
+        alignContent: 'center',
+        padding: 5,
+        width: windowWidth * 0.55,
+        backgroundColor: '#F5F5DC',
+
     },
 
     title: {
@@ -96,21 +127,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 20,
+        alignSelf: 'center',
     },
 
     inputName: {
         height: 40,
         borderColor: '#cccccc',
         borderWidth: 1,
-        marginBottom: 10,
+        borderRadius: 23,
+        marginTop: 15,
+        marginBottom: 20,
         paddingHorizontal: 10,
     },
 
     inputEmail: {
         height: 40,
         borderColor: '#cccccc',
+        borderRadius: 23,
         borderWidth: 1,
-        marginBottom: 10,
+        marginBottom: 20,
         paddingHorizontal: 10,
     },
 
@@ -118,7 +153,30 @@ const styles = StyleSheet.create({
         height: 40,
         borderColor: '#cccccc',
         borderWidth: 1,
-        marginBottom: 10,
+        marginBottom: 20,
+        borderRadius: 23,
         paddingHorizontal: 10,
     },
+
+    btnSignIn: {
+        display: 'flex',
+        width: 110,
+        borderWidth: 1,
+        borderColor: '#2C3E50',
+        borderRadius: 20,
+        height: 40,
+        padding: 9,
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#2C3E50'
+    },
+
+    txtSignIn: {
+        textAlign: 'center',
+        color: 'white',
+    },
+
+    lock: {
+        alignSelf: 'flex-end',
+    }
 });
