@@ -5,10 +5,15 @@ import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
+
+
+    
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Login">
