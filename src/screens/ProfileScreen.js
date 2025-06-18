@@ -50,6 +50,11 @@ export default function ProfileScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+
     container: {
         height: '100%',
         justifyContent: 'center',

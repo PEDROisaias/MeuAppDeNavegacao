@@ -155,6 +155,11 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    imageBackground: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+
     container: {
         display: 'flex',
         justifyContent: 'center',
